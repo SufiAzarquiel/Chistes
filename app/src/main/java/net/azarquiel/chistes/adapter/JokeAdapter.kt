@@ -1,6 +1,8 @@
 package net.azarquiel.chistes.adapter
 
 import android.content.Context
+import android.os.Build
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,8 +46,15 @@ class JokeAdapter(val context: Context,
             val ivRowJokeIcon = itemView.findViewById(R.id.ivRowJokeIcon) as ImageView
             val tvRowContent = itemView.findViewById(R.id.tvRowContent) as TextView
 
-            // set values
-            tvRowContent.text = dataItem.content.substring(0,20)
+            // display html in content textview
+            tvRowContent.text = dataItem.content.substring(0,40)
+            tvRowContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(dataItem.content.substring(0,40) , Html.FROM_HTML_MODE_COMPACT)
+            } else {
+                Html.fromHtml(dataItem.content.substring(0,40), Html.FROM_HTML_MODE_LEGACY)
+            }
+            if (dataItem.content.length > 40) tvRowContent.append("...")
+
             // load image from url
             var url = "http://www.ies-azarquiel.es/paco/apichistes/img/${dataItem.catId}.png"
             Picasso.get()

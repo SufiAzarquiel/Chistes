@@ -38,7 +38,7 @@
             android:text="Malos"
             android:textAlignment="center"
             android:textColor="@color/malva"
-            android:textSize="10sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@+id/ivRowJokeIcon"

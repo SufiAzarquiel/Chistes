@@ -1,7 +1,9 @@
 package net.azarquiel.chistes.view
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
@@ -34,8 +36,13 @@ class JokeContentActivity : AppCompatActivity() {
     }
 
     private fun setViews() {
-        tvContent.text = joke.content
         tvCat.text = category.name
+        // display html in content textview
+        tvContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(joke.content , Html.FROM_HTML_MODE_COMPACT)
+        } else {
+            Html.fromHtml(joke.content, Html.FROM_HTML_MODE_LEGACY)
+        }
 
         // load image from url
         var url = "http://www.ies-azarquiel.es/paco/apichistes/img/${joke.catId}.png"
