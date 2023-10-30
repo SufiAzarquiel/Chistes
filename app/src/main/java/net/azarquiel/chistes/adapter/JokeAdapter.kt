@@ -46,14 +46,18 @@ class JokeAdapter(val context: Context,
             val ivRowJokeIcon = itemView.findViewById(R.id.ivRowJokeIcon) as ImageView
             val tvRowContent = itemView.findViewById(R.id.tvRowContent) as TextView
 
-            // display html in content textview
-            tvRowContent.text = dataItem.content.substring(0,40)
-            tvRowContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(dataItem.content.substring(0,40) , Html.FROM_HTML_MODE_COMPACT)
+            // check if content is too long
+            var content = if (dataItem.content.length > 40) {
+                dataItem.content.substring(0,40) + "..."
             } else {
-                Html.fromHtml(dataItem.content.substring(0,40), Html.FROM_HTML_MODE_LEGACY)
+                dataItem.content
             }
-            if (dataItem.content.length > 40) tvRowContent.append("...")
+            // display html in content textview
+            tvRowContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(content , Html.FROM_HTML_MODE_COMPACT)
+            } else {
+                Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY)
+            }
 
             // load image from url
             var url = "http://www.ies-azarquiel.es/paco/apichistes/img/${dataItem.catId}.png"
